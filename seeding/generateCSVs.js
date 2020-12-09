@@ -2,7 +2,7 @@ var fs = require('fs');
 var lines = require('./csvLines.js');
 
 var streams = {
-  users: fs.createWriteStream('seeding/csvFiles/users.csv'),
+  users: fs.createWriteStream(__dirname + '/csvFiles/users.csv'),
   listings: fs.createWriteStream('seeding/csvFiles/listings.csv'),
   addresses: fs.createWriteStream('seeding/csvFiles/addresses.csv'),
   images: fs.createWriteStream('seeding/csvFiles/images.csv')
@@ -21,8 +21,10 @@ var drainOk = {
 };
 
 var generateCSVs = (userQty, listing) => {
-  var userId, listingId, imageId;
-  userId = listingId = imageId = 0;
+  var userId = 0;
+  var listingId = 0;
+  var imageId = 0;
+  var marker = 5;
 
   var write = () => {
 
@@ -33,29 +35,38 @@ var generateCSVs = (userQty, listing) => {
       drainOk.images = streams.images.write(lines.image(++imageId, listingId));
 
       var percentComplete = Math.floor(userId / userQty * 100);
-      if (percentComplete % 5 === 0) { console.log(percentComplete + '% of CSV files complete'); }
-    };
-  }
-  write();
+      if (percentComplete === marker) {
+        console.log(percentComplete + '% of CSV files complete');
+        marker += 5;
+      }
+    }
 
-  if (userId < userQty) {
-    if (!drainOk.users) {
-      drainOk.users = true;
-      return streams.users.once('drain', write);
-    }
-    if (!drainOk.listings) {
-      drainOk.listings = true;
-      return streams.listings.once('drain', write);
-    }
-    if (!drainOk.addresses) {
-      drainOk.addresses = true;
-      return streams.addresses.once('drain', write);
-    }
-    if (!drainOk.images) {
-      drainOk.images = true;
-      return streams.images.once('drain', write);
+    if (userId < userQty) {
+      if (!drainOk.users) {
+        drainOk.users = true;
+        return streams.users.once('drain', write);
+      }
+      if (!drainOk.listings) {
+        drainOk.listings = true;
+        return streams.listings.once('drain', write);
+      }
+      if (!drainOk.addresses) {
+        drainOk.addresses = true;
+        return streams.addresses.once('drain', write);
+      }
+      if (!drainOk.images) {
+        drainOk.images = true;
+        return streams.images.once('drain', write);
+      }
+    } else {
+      streams.users.end();
+      streams.listings.end();
+      streams.addresses.end();
+      streams.images.end();
     }
   }
+
+  write();
 };
 
 var listing = {
@@ -69,8 +80,4 @@ var listing = {
   minSqft: 1000
 };
 
-generateCSVs(100, listing);
-streams.users.end();
-streams.listings.end();
-streams.addresses.end();
-streams.images.end();
+generateCSVs(300, listing);

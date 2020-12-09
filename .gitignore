@@ -26,3 +26,6 @@ build/
 
 ## Key Files
 *.pem
+
+# large CSV files used to seed postgreSQL database
+*.csv

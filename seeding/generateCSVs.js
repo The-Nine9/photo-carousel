@@ -25,11 +25,15 @@ var generateCSVs = (userQty, listing) => {
   userId = listingId = imageId = 0;
 
   var write = () => {
+
     while (userId < userQty && drainOk.users && drainOk.listings && drainOk.addresses && drainOk.images) {
       drainOk.users = streams.users.write(lines.user(++userId));
       drainOk.listings = streams.listings.write(lines.listing(++listingId, listing, userId));
       drainOk.addresses = streams.addresses.write(lines.address(listingId, userId));
       drainOk.images = streams.images.write(lines.image(++imageId, listingId));
+
+      var percentComplete = Math.floor(userId / userQty * 100);
+      if (percentComplete % 5 === 0) { console.log(percentComplete + '% of CSV files complete'); }
     };
   }
   write();

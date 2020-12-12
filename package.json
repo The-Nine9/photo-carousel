@@ -14,7 +14,8 @@
     "react-prod": "webpack",
     "start": "nodemon ./server/server.js",
     "seed-database": "node seed.js",
-    "csv": "node seeding/generateCSVs.js"
+    "csv": "node seeding/generateCSVs.js",
+    "seed-pg": "psql -f postgres.sql"
   },
   "keywords": [],
   "devDependencies": {

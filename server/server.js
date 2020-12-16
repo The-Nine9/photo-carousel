@@ -1,17 +1,12 @@
-const express = require('express');
+var express = require('express');
+var bodyParser = require('body-parser');
+var path = require('path');
 
-const bodyParser = require('body-parser');
+var app = express();
+var port = 8030;
+var listingRouter = require('./routers/listing.js');
 
-const path = require('path');
-
-const app = express();
-const port = 8030;
-const mongoose = require('mongoose');
-const listingRouter = require('./routers/listing.js');
-
-mongoose.connect('mongodb://localhost:/similarhomes');
-
-const publicDir = path.join(__dirname, '../client/dist');
+var publicDir = path.join(__dirname, '../client/dist');
 
 app.use(bodyParser.json());
 

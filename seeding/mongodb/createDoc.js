@@ -50,7 +50,7 @@ var listing = (id, totalIds) => {
         imageUrl: `https://s3-us-west-1.amazonaws.com/fec.similarhomes/FEC+pictures/${imageUrls[id % imageUrls.length]}house.jpg`,
         '3D': Math.random() < .08 ? true : false,
         construction: Math.random() < 0.12 ? true : false,
-        similarHomes: Array(15).fill().map(() => {
+        similarHomes: Array(Math.min(totalIds - 1, 15)).fill().map(() => {
           return Math.floor(Math.random() * totalIds) + 1;
         }),
       }

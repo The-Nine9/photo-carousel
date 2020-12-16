@@ -9,12 +9,13 @@ var listingSchema = mongoose.Schema({
   roomCount: Number,
   bathCount: Number,
   sqft: Number,
-  userId: Number,
   street: String,
   neighborhood: String,
   city: String,
   zip: {},
-  url: String,
+  imageUrl: String,
+  '3D': Boolean,
+  construction: Boolean,
   similarHomes: [Number]
 });
 

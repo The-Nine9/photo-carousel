@@ -1,4 +1,4 @@
-var json = require('./jsonObject.js');
+var createDoc = require('./createDoc.js');
 
 var getTime = (start) => {
   var ms = new Date - start;
@@ -15,7 +15,7 @@ var seedMongo = (collection, listingQty, next) => {
   var insert = () => {
 
     var docs = Array(Math.min(listingQty - listingId, batchSize)).fill()
-      .map(() => json(++listingId, listingQty));
+      .map(() => createDoc(++listingId, listingQty));
 
     collection.bulkWrite(docs, { ordered: false }, (err, result) => {
       if (err) {

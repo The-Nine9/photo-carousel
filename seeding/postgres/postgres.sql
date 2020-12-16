@@ -22,6 +22,11 @@ CREATE TABLE listings (
   url VARCHAR(1000) NOT NULL
 );
 
+-- CREATE TABLE similarHomes (
+--   home_id INT,
+--   similar_id INT
+-- );
+
 -- CREATE TABLE locations (
 --   id BIGSERIAL PRIMARY KEY,
 --   street VARCHAR(100) NOT NULL,
@@ -59,6 +64,6 @@ CREATE TABLE listings (
 -- );
 
 --change absolute path as necessary
-COPY listings FROM '/home/twills/coding/HackReactor/sdc/photo-carousel/seeding/csvFiles/listings.csv'
+COPY listings FROM '/home/twills/coding/HackReactor/sdc/photo-carousel/seeding/postgres/csvFiles/listings.csv'
   DELIMITER ','
   CSV HEADER;

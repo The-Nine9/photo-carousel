@@ -4,7 +4,7 @@ var lines = require('./csvLines.js');
 
 var streams = {
   // users: fs.createWriteStream(__dirname + '/csvFiles/users.csv'),
-  listings: fs.createWriteStream('seeding/csvFiles/listings.csv'),
+  listings: fs.createWriteStream('seeding/postgres/csvFiles/listingsTEST.csv'),
   // addresses: fs.createWriteStream('seeding/csvFiles/addresses.csv'),
   // images: fs.createWriteStream('seeding/csvFiles/images.csv')
 };
@@ -86,4 +86,4 @@ var listing = {
   minSqft: 1000
 };
 
-generateCSVs(10000000, listing);
+generateCSVs(1000000, listing);
